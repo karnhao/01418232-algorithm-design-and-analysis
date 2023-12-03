@@ -26,7 +26,7 @@ public class Sqrt2 {
     }
 
     /**
-     * Running time = O(5) = O(1)
+     * Running time = O(8) = O(1)
      * @param x double value
      * @return sqrt of x
      */
