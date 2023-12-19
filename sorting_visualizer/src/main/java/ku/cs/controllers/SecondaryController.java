@@ -13,6 +13,9 @@ import ku.cs.services.utils.SortingSound;
 
 public class SecondaryController {
 
+    private final long delay = 20;
+    private final int size = 256;
+
     public HBox hBox;
     private Thread sequence1;
 
@@ -29,9 +32,8 @@ public class SecondaryController {
             return;
         }
         sequence1 = new Thread(() -> {
-            final int delay = 20;
             // create sorted array
-            int[] array = new int[32];
+            int[] array = new int[size];
             for (int i = 0; i < array.length; i++) array[i] = i;
 
             SortingSound sortingSound = new SortingSound(array.length - 1);
@@ -44,7 +46,8 @@ public class SecondaryController {
                 int temp = array[random_index];
                 array[random_index] = array[i];
                 array[i] = temp;
-                Platform.runLater(()-> updateHBox(array));
+                int finalI = i;
+                Platform.runLater(()-> updateHBox(array, finalI, random_index));
                 Beep.tone(sortingSound.getHz(i), 50, 0.075);
                 Beep.tone(sortingSound.getHz(temp), 50, 0.075);
                 try {
@@ -56,7 +59,7 @@ public class SecondaryController {
 
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -64,25 +67,33 @@ public class SecondaryController {
             for (int i : array) System.out.print(i + ", ");
             System.out.println();
 
-            // selection sort
-            for (int i = 0; i < array.length - 1; i++) {
-                int index = i;
-                for (int j = i + 1; j < array.length; j++) {
-                    int finalIndex = index;
-                    int finalJ = j;
-                    Platform.runLater(()-> updateHBox(array, finalIndex, finalJ));
-                    Beep.tone(sortingSound.getHz(array[j]), 50, 0.125);
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) {
-                        return;
-                    }
-                    if (array[j] < array[index]) index = j;
-                }
-                int smaller = array[index];
-                array[index] = array[i];
-                array[i] = smaller;
-            }
+//            // selection sort
+//            for (int i = 0; i < array.length - 1; i++) {
+//                int index = i;
+//                for (int j = i + 1; j < array.length; j++) {
+//                    int finalIndex = index;
+//                    int finalJ = j;
+//                    Platform.runLater(()-> updateHBox(array, finalIndex, finalJ));
+//                    Beep.tone(sortingSound.getHz(array[j]), 50, 0.125);
+//                    try {
+//                        Thread.sleep(delay);
+//                    } catch (InterruptedException e) {
+//                        return;
+//                    }
+//                    if (array[j] < array[index]) index = j;
+//                }
+//                int smaller = array[index];
+//                array[index] = array[i];
+//                array[i] = smaller;
+//            }
+
+            // merge sort
+            mergeSort(array, 0, array.length - 1, sortingSound);
+
+
+
+
+
 
             int[] selected = new int[array.length];
             Arrays.fill(selected, -1);
@@ -123,10 +134,52 @@ public class SecondaryController {
             }
 
 
-            pane.setPrefHeight(1 + array[i] * 10);
-            pane.setMaxHeight(1 + array[i] * 10);
-            pane.setPrefWidth(7);
+            pane.setPrefHeight(1 + array[i] * 2);
+            pane.setMaxHeight(1 + array[i] * 2);
+            pane.setPrefWidth(3);
             hBox.getChildren().add(pane);
+        }
+    }
+
+    private void mergeSort(int[] array, int min, int max, SortingSound sortingSound) {
+        if (min < max) {
+            int m = min + (max - min) / 2;
+            mergeSort(array, min, m, sortingSound);
+            mergeSort(array, m + 1,  max, sortingSound);
+            merge(array, min, m, max, sortingSound);
+        }
+    }
+
+    private void merge(int[] array, int start, int mid, int end, SortingSound sortingSound) {
+        int start2 = mid + 1;
+        while (start <= mid && start2 <= end) {
+
+            if (array[start] <= array[start2])
+                start++;
+            else {
+                int value = array[start2];
+                int index = start2;
+
+                while (index != start) {
+                    array[index] = array[index - 1];
+                    index--;
+                }
+                array[start] = value;
+                int finalStart = start;
+                int finalMid = mid;
+                int finalStart1 = start2;
+                Platform.runLater(()-> updateHBox(array, finalStart, finalMid, finalStart1));
+                Beep.tone(sortingSound.getHz(array[start]), 50, 0.125);
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                start++;
+                mid++;
+                start2++;
+            }
+
         }
     }
 }
