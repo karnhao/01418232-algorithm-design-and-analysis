@@ -9,4 +9,7 @@ module ku.cs {
 
     opens ku.cs.controllers;
     exports ku.cs.controllers;
+
+    opens ku.cs.models;
+    exports ku.cs.models;
 }
