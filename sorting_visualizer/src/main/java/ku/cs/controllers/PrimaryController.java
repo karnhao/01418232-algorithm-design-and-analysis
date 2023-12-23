@@ -2,28 +2,31 @@ package ku.cs.controllers;
 
 import java.io.IOException;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import ku.cs.App;
+import ku.cs.models.SortingAlgorithm;
 import ku.cs.models.algorithms.Check;
 import ku.cs.models.algorithms.Merge;
 import ku.cs.models.algorithms.Selection;
 import ku.cs.models.algorithms.Shuffle;
-import ku.cs.services.utils.Beep;
 
 public class PrimaryController {
-
-    public Button primaryButton;
     public VBox vBox;
+    public ComboBox<SortingAlgorithm> comboBox;
+    public VBox scrollVBox;
+    public Label lengthLabel;
+    public TextField lengthTextField;
+    public Slider delaySlider;
+    public Label delayLabel;
 
-    private VisualizerController controller;
+    private AlgorithmSequenceListController algorithmSequenceListController;
 
-    @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
+    private VisualizerController visualizerController;
 
     public void initialize() {
         FXMLLoader loader = new FXMLLoader();
@@ -36,25 +39,46 @@ public class PrimaryController {
         }
         visualizer.prefWidthProperty().bind(vBox.widthProperty());
         visualizer.prefHeightProperty().bind(vBox.heightProperty());
-        controller = loader.getController();
+        visualizerController = loader.getController();
         vBox.getChildren().add(visualizer);
 
         visualizer.prefWidthProperty().bind(vBox.widthProperty());
         visualizer.prefHeightProperty().bind(vBox.heightProperty());
+
+        comboBox.getItems().addAll(new Shuffle(), new Selection(), new Merge(), new Check());
+
+        loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/ku/cs/views/algorithm_sequence_list.fxml"));
+        Node node;
+        try {
+            node = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        algorithmSequenceListController = loader.getController();
+        scrollVBox.getChildren().add(node);
+
+
+        delaySlider.valueProperty().addListener((observableValue, number, t1) ->
+                delayLabel.setText("Delay : " + t1.intValue() + " ms"));
     }
 
-    public void test1() {
-        Beep.tone(523, 100, 0.125);
-        controller.runVisualize(32, 10, new Shuffle(), new Selection(), new Check());
+    public void onAddAlgorithmButton() {
+        if (comboBox.getValue() == null) return;
+        algorithmSequenceListController.addAlgorithm(comboBox.getValue());
     }
 
-    public void test2() {
-        Beep.tone(587, 100, 0.125);
-        controller.runVisualize(64, 10, new Shuffle(), new Merge(), new Check());
-    }
+    public void onStartVisualizeButton() {
+        int size = Integer.parseInt(lengthTextField.getText().trim());
+        if (size < 2) throw new IllegalArgumentException("Size must bigger than 2");
 
-    public void test3() {
-        Beep.tone(659, 100, 0.125);
-        controller.runVisualize(256, 5, new Shuffle(), new Merge(), new Check());
+        int delay = (int) delaySlider.getValue();
+        if (delay < 1) throw new IllegalArgumentException("Delay must greater than 1");
+        try {
+            visualizerController.runVisualize(size, delay, algorithmSequenceListController.getSortingAlgorithmList().toArray(SortingAlgorithm[]::new));
+        } catch (Exception e) {
+            System.out.println("An error has occur : " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

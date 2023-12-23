@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * JavaFX App
@@ -14,11 +15,16 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static Stage stage;
+    private static String currentStyle;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("primary"), 1080, 720);
         stage.setScene(scene);
+        App.stage = stage;
+
+        setTheme("default.css");
         stage.show();
     }
 
@@ -35,4 +41,17 @@ public class App extends Application {
         launch();
     }
 
+    public static Stage getStage() {
+        return App.stage;
+    }
+
+    public static void setTheme(String styleFileName) {
+        URL stylesheetURL = App.class.getResource("/ku/cs/styles/" + styleFileName);
+        String styleSheet = "";
+
+        if (stylesheetURL != null) styleSheet = stylesheetURL.toExternalForm(); // theme
+        if (currentStyle != null) App.stage.getScene().getStylesheets().remove(currentStyle);
+        App.stage.getScene().getStylesheets().add(styleSheet);
+        App.currentStyle = styleSheet;
+    }
 }

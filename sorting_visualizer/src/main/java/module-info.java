@@ -12,4 +12,7 @@ module ku.cs {
 
     opens ku.cs.models;
     exports ku.cs.models;
+
+    opens ku.cs.services.utils;
+    exports ku.cs.services.utils;
 }

@@ -41,7 +41,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>ku.cs.App</mainClass>
+                            <mainClass>ku.cs/ku.cs.App</mainClass>
                         </configuration>
                     </execution>
                 </executions>

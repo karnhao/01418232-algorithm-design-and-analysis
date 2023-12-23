@@ -45,6 +45,7 @@ public class VisualizerCanvas extends Canvas {
     }
 
     private void colorBars(GraphicsContext graphicsContext, int[] values, int height, int colWidth, int x, SelectedIndex... selectedIndices) {
+        double margin = values.length > 128 ? 0 : 1;
         for (int index = 0; index < values.length; index++) {
             graphicsContext.setFill(Color.valueOf("#006664"));
             if (selectedIndices != null)
@@ -57,7 +58,7 @@ public class VisualizerCanvas extends Canvas {
                 }
             int value = values[index];
             int colHeight = (int) ((float) height * ((float) value / (float) maxValue));
-            graphicsContext.fillRect(x, height - colHeight, colWidth - 1, colHeight);
+            graphicsContext.fillRect(x, height - colHeight, colWidth - margin, colHeight);
             x += colWidth;
         }
     }

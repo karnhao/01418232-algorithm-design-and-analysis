@@ -36,7 +36,7 @@ public abstract class SortingAlgorithm extends DefaultSorter implements Sorter {
     }
 
     public void initialize(int[] array, int delay) {
-        this.initialize(array, delay, 10, 0.1f);
+        this.initialize(array, delay, delay, 0.1f);
     }
 
     @Override
@@ -80,5 +80,10 @@ public abstract class SortingAlgorithm extends DefaultSorter implements Sorter {
 
     final protected void setVolume(float volume) {
         this.volume = volume;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }
