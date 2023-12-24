@@ -10,10 +10,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import ku.cs.models.SortingAlgorithm;
-import ku.cs.models.algorithms.Check;
-import ku.cs.models.algorithms.Merge;
-import ku.cs.models.algorithms.Selection;
-import ku.cs.models.algorithms.Shuffle;
+import ku.cs.models.algorithms.*;
 
 public class PrimaryController {
     public VBox vBox;
@@ -45,7 +42,7 @@ public class PrimaryController {
         visualizer.prefWidthProperty().bind(vBox.widthProperty());
         visualizer.prefHeightProperty().bind(vBox.heightProperty());
 
-        comboBox.getItems().addAll(new Shuffle(), new Selection(), new Merge(), new Check());
+        comboBox.getItems().addAll(new Shuffle(), new Selection(), new Merge(), new TopUpNonRecursiveMerge(), new Check());
 
         loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/ku/cs/views/algorithm_sequence_list.fxml"));
