@@ -23,6 +23,10 @@ public class AlgorithmSequenceListController {
         updateList();
     }
 
+    public void addAlgorithm(int index, SortingAlgorithm sortingAlgorithm) {
+        sortingAlgorithmList.add(index, sortingAlgorithm);
+    }
+
     public void removeAlgorithm(int index) {
         sortingAlgorithmList.remove(index);
     }

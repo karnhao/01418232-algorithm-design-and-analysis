@@ -70,3 +70,12 @@
     -fx-background-color: transparent;
     -fx-background-insets: 0;
 }
+
+.my-list-item {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.my-list-item:hover {
+    -fx-background-color: #e4e4e4;
+}

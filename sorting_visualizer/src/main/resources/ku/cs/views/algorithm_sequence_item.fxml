@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="64.0" maxWidth="1.7976931348623157E308" minHeight="64.0" prefHeight="64.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.AlgorithmSequenceItemController">
+<VBox fx:id="vBox" alignment="CENTER" maxWidth="1.7976931348623157E308" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onDragDropped="#onDragDropped" onDragEntered="#onDragEntered" onDragExited="#onDragExited" onDragOver="#onDragOver" styleClass="my-list-item" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.AlgorithmSequenceItemController">
    <children>
       <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
-            <Label fx:id="nameLabel" text="Name">
+            <Label fx:id="nameLabel" text="Name" wrapText="true">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
                <padding>
                   <Insets left="20.0" right="20.0" />
@@ -29,4 +29,7 @@
          </children>
       </HBox>
    </children>
+   <padding>
+      <Insets bottom="5.0" top="5.0" />
+   </padding>
 </VBox>
