@@ -17,7 +17,7 @@ public class Main1 {
 
         float half_length = array.length / 2.0f;
         
-        // O(n^2)
+        // O(n^2) เนื่องจากกรณีที่ทุกตัวไม่เหมือนกันเลยจะทำการวนซ้ำแบบ Brute Force
         for (T i : uniqueElements) {
             int count = 0;
             for (T j : array) if (i.equals(j)) count++;

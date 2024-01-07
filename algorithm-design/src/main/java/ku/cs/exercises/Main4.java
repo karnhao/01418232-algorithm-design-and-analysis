@@ -42,15 +42,15 @@ public class Main4 {
 
     public static int findMissing(Integer[] array) {
         if (array.length == 0) throw new IllegalArgumentException();
-        mergeSort(array, 0, array.length - 1);
+        mergeSort(array, 0, array.length - 1); // O(n*log_2(n))
         int prev = 0;
-        for (int i : array) {
+        for (int i : array) { // O(n)
             if (i - prev == 2) return i - 1;
             else if (i - prev == 1) prev = i;
             else throw new IllegalArgumentException(i + " - " + prev);
         }
         return array.length + 1;
-    }
+    } // Time complexity อยู่ใน O(n * log_2(n))
 
     private static void printArrayAndMissing(Integer[] array) {
         System.out.print("Array ");

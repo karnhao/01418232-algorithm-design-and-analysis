@@ -25,7 +25,7 @@ public class Main5 {
 
     public static boolean contains(int[][] matrix, int value, int up, int down) {
 
-        if (up == down) { // เหลือแถวเดียวใช้ binary search
+        if (up == down) { // เหลือแถวเดียวใช้ binary search O(log_2(n))
             int searchResult = binarySearch(matrix[up], 0, matrix[up].length - 1, value);
             return searchResult == -1 ? false : true;
         }
@@ -34,8 +34,8 @@ public class Main5 {
         int midValue = matrix[midIndex][matrix[midIndex].length - 1]; // ค่าตรงกลางแถวและ column สุดท้าย
         if (midValue == value) return true;
         if (midValue > value) return contains(matrix, value, up, midIndex);
-        else return contains(matrix, value, midIndex + 1, down);
-    }
+        else return contains(matrix, value, midIndex + 1, down); // แบ่ง matrix ครึ่งนึงเป็นบนกับล่างแล้วเลือกเฉพาะด้านนึง จะอยู่ภายใน O(log_2(n))
+    } // Time complexity โดยรวมอยู่ภายใน O(log_2(n) + log_2(n)) = O(2*log_2(n)) = O(log_2(n))
 
     public static boolean contains(int[][] matrix, int value) {
         return contains(matrix, value, 0, matrix.length - 1);
