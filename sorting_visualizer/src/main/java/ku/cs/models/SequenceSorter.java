@@ -3,7 +3,7 @@ package ku.cs.models;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SequenceSorter extends DefaultSorter implements Sorter {
+public class SequenceSorter extends DefaultSorter {
     private final List<SortingAlgorithm> sorters;
 
     private SortingAlgorithm currentAlgorithm;

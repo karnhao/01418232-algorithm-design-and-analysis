@@ -1,7 +1,5 @@
 package ku.cs.models;
 
-import javafx.concurrent.Task;
-
 import javax.swing.event.ChangeListener;
 import java.util.LinkedList;
 import java.util.List;

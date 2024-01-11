@@ -25,6 +25,6 @@ public class SortingSound {
     }
 
     public int getHz(int x) {
-        return MIN_HZ + (MAX_HZ - MIN_HZ) / (max_value - min_value) * (x - min_value);
+        return (int)(MIN_HZ + ((float)(MAX_HZ - MIN_HZ) / (max_value - min_value) * (x - min_value)));
     }
 }

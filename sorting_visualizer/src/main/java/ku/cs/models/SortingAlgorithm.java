@@ -5,7 +5,7 @@ import ku.cs.services.utils.SortingSound;
 
 import javax.swing.event.ChangeEvent;
 
-public abstract class SortingAlgorithm extends DefaultSorter implements Sorter {
+public abstract class SortingAlgorithm extends DefaultSorter {
     protected int beep_mSec;
     protected float volume;
 

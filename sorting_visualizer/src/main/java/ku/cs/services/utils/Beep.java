@@ -7,13 +7,19 @@ import javax.sound.sampled.SourceDataLine;
 
 public class Beep {
     public static float SAMPLE_RATE = 8000f;
+    private static long prev = System.currentTimeMillis();
+    private static final int SOUND_DELAY = 10;
 
     public static void tone(int hz, int msecs) throws LineUnavailableException {
         tone(hz, msecs, 1.0);
     }
 
     public static void tone(int hz, int msecs, double vol) {
-
+        long start = System.currentTimeMillis();
+        if (start - prev < SOUND_DELAY) return;
+        if (msecs < SOUND_DELAY) msecs = SOUND_DELAY;
+        prev = System.currentTimeMillis();
+        final int finalMsecs = msecs;
         new Thread(() -> {
             byte[] buf = new byte[1];
             AudioFormat af =
@@ -35,7 +41,7 @@ public class Beep {
                 throw new RuntimeException(e);
             }
             sdl.start();
-            for (int i=0; i < msecs*8; i++) {
+            for (int i=0; i < finalMsecs*8; i++) {
                 double angle = i / (SAMPLE_RATE / hz) * 2.0 * Math.PI;
                 buf[0] = (byte)(Math.signum(Math.cos(angle)) * 127.0 * vol);
                 sdl.write(buf,0,1);

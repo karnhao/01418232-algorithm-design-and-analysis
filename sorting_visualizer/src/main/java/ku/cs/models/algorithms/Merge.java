@@ -2,7 +2,6 @@ package ku.cs.models.algorithms;
 
 import ku.cs.models.SelectedIndex;
 import ku.cs.models.SortingAlgorithm;
-import ku.cs.services.utils.Beep;
 
 public class Merge extends SortingAlgorithm {
     @Override

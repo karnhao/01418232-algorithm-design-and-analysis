@@ -42,7 +42,15 @@ public class PrimaryController {
         visualizer.prefWidthProperty().bind(vBox.widthProperty());
         visualizer.prefHeightProperty().bind(vBox.heightProperty());
 
-        comboBox.getItems().addAll(new Shuffle(), new Selection(), new Merge(), new TopUpNonRecursiveMerge(), new Check());
+        comboBox.getItems().addAll(
+            new Shuffle(),
+            new Selection(),
+            new Merge(),
+            new TopUpNonRecursiveMerge(),
+            new Heap(),
+            new Radix(),
+            new Check()
+        );
 
         loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/ku/cs/views/algorithm_sequence_list.fxml"));

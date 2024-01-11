@@ -36,18 +36,18 @@ public class VisualizerCanvas extends Canvas {
 
         render(graphicsContext);
         int[] values = sorter.getArray();
-        int width = (int) (getWidth() - 1);
-        int height = (int) (getHeight() - 1);
-        int colWidth = Math.round((float) width / (float) values.length);
-        int x = 0;
+        double width = getWidth() - 1;
+        double height = getHeight() - 1;
+        double colWidth = width / values.length;
+        double x = 0;
         colorBars(graphicsContext, values, height, colWidth, x, sorter.getSelectedIndices());
 
     }
 
-    private void colorBars(GraphicsContext graphicsContext, int[] values, int height, int colWidth, int x, SelectedIndex... selectedIndices) {
+    private void colorBars(GraphicsContext graphicsContext, int[] values, double height, double colWidth, double x, SelectedIndex... selectedIndices) {
         double margin = values.length > 128 ? 0 : 1;
         for (int index = 0; index < values.length; index++) {
-            graphicsContext.setFill(Color.valueOf("#006664"));
+            graphicsContext.setFill(Color.valueOf("#FFFFFF"));
             if (selectedIndices != null)
                 for (SelectedIndex i : selectedIndices) {
                     if (i == null) continue;
@@ -57,14 +57,14 @@ public class VisualizerCanvas extends Canvas {
                     }
                 }
             int value = values[index];
-            int colHeight = (int) ((float) height * ((float) value / (float) maxValue));
+            double colHeight = (height * (1.0 * value / maxValue));
             graphicsContext.fillRect(x, height - colHeight, colWidth - margin, colHeight);
             x += colWidth;
         }
     }
 
     private void render(GraphicsContext graphicsContext) {
-        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillText("Delay = " + sorter.getDelay(), 8, 25);
     }
 

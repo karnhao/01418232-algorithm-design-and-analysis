@@ -16,6 +16,8 @@ public class TopUpNonRecursiveMerge extends SortingAlgorithm {
 
                 int rightEnd = leftStart + 2 * currentSize - 1;
                 if (rightEnd > array.length - 1) rightEnd = array.length - 1;
+                if (mid > array.length - 1) mid = array.length - 1;
+                    
                 merge(leftStart, mid, rightEnd);
             }
         }
