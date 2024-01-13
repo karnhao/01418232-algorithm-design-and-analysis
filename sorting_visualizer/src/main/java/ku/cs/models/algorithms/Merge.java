@@ -1,6 +1,6 @@
 package ku.cs.models.algorithms;
 
-import ku.cs.models.SelectedIndex;
+import ku.cs.models.FixedSelectedIndex;
 import ku.cs.models.SortingAlgorithm;
 
 public class Merge extends SortingAlgorithm {
@@ -29,13 +29,13 @@ public class Merge extends SortingAlgorithm {
 
         for (int i = 0; i < n1; i++) {
             L[i] = array[l + i];
-            setSelectedIndices(SelectedIndex.as(l + i));
+            setSelectedIndices(FixedSelectedIndex.as(l + i));
             beep(l + i);
             this.onChange();
         }
         for (int i = 0; i < n2; i++) {
             R[i] = array[m + 1 + i];
-            setSelectedIndices(SelectedIndex.as(m + 1 + i));
+            setSelectedIndices(FixedSelectedIndex.as(m + 1 + i));
             beep(m + 1 + i);
             this.onChange();
         }
@@ -44,13 +44,13 @@ public class Merge extends SortingAlgorithm {
         while (i < n1 && j < n2) {
             if (L[i] <= R[j]) {
                 array[k] = L[i];
-                setSelectedIndices(SelectedIndex.as(k));
+                setSelectedIndices(FixedSelectedIndex.as(k));
                 beep(k);
                 this.onChange();
                 i++;
             } else {
                 array[k] = R[j];
-                setSelectedIndices(SelectedIndex.as(k));
+                setSelectedIndices(FixedSelectedIndex.as(k));
                 beep(k);
                 this.onChange();
                 j++;
@@ -61,7 +61,7 @@ public class Merge extends SortingAlgorithm {
         // remaining elements
         while (i < n1) {
             array[k] = L[i];
-            setSelectedIndices(SelectedIndex.as(k));
+            setSelectedIndices(FixedSelectedIndex.as(k));
             beep(k);
             this.onChange();
             i++;
@@ -70,7 +70,7 @@ public class Merge extends SortingAlgorithm {
 
         while (j < n2) {
             array[k] = R[j];
-            setSelectedIndices(SelectedIndex.as(k));
+            setSelectedIndices(FixedSelectedIndex.as(k));
             beep(k);
             this.onChange();
             j++;

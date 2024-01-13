@@ -5,9 +5,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import ku.cs.controllers.VisualizerController;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * Modify from <a href="https://github.com/beingmartinbmc/SortMe/blob/master/src/frames/MyPanel.java">this code</a>
+ * Modify from <a href=
+ * "https://github.com/beingmartinbmc/SortMe/blob/master/src/frames/MyPanel.java">this
+ * code</a>
  */
 public class VisualizerCanvas extends Canvas {
     private SequenceSorter sorter;
@@ -40,22 +44,40 @@ public class VisualizerCanvas extends Canvas {
         double height = getHeight() - 1;
         double colWidth = width / values.length;
         double x = 0;
-        colorBars(graphicsContext, values, height, colWidth, x, sorter.getSelectedIndices());
+        colorBars(graphicsContext, values, height, colWidth, x,
+                new SelectedIndexCollection(sorter.getSelectedIndices()));
 
     }
 
-    private void colorBars(GraphicsContext graphicsContext, int[] values, double height, double colWidth, double x, SelectedIndex... selectedIndices) {
+    private void colorBars(GraphicsContext graphicsContext, int[] values, double height, double colWidth, double x,
+            SelectedIndexCollection selectedIndices) {
         double margin = values.length > 128 ? 0 : 1;
         for (int index = 0; index < values.length; index++) {
             graphicsContext.setFill(Color.valueOf("#FFFFFF"));
-            if (selectedIndices != null)
-                for (SelectedIndex i : selectedIndices) {
-                    if (i == null) continue;
-                    if (i.getIndex() == index) {
-                        graphicsContext.setFill(i.getColor());
-                        break;
+
+            List<SelectedIndex> selectedIndexList = selectedIndices.getList();
+
+            if (selectedIndexList != null) {
+                Iterator<SelectedIndex> iterator = selectedIndices.getList().iterator();
+                while (iterator.hasNext()) {
+                    SelectedIndex selectedIndex = iterator.next();
+                    if (selectedIndex == null)
+                        continue;
+                    if (selectedIndex instanceof FixedSelectedIndex) {
+                        FixedSelectedIndex fixedSelectedIndex = (FixedSelectedIndex) selectedIndex;
+                        if (fixedSelectedIndex.getIndex() == index) {
+                            graphicsContext.setFill(fixedSelectedIndex.getColor());
+                            break;
+                        }
+                    } else if (selectedIndex instanceof RangeSelectedIndex) {
+                        RangeSelectedIndex selectedIndexRange = (RangeSelectedIndex) selectedIndex;
+                        if (index <= selectedIndexRange.getEnd() && index >= selectedIndexRange.getStart()) {
+                            graphicsContext.setFill(selectedIndexRange.getColor());
+                            break;
+                        }
                     }
                 }
+            }
             int value = values[index];
             double colHeight = (height * (1.0 * value / maxValue));
             graphicsContext.fillRect(x, height - colHeight, colWidth - margin, colHeight);
@@ -69,14 +91,19 @@ public class VisualizerCanvas extends Canvas {
     }
 
     public DefaultSorter setSorter(SequenceSorter sorter) {
-        if (sorter == null || this.sorter == sorter) return null;
+        if (sorter == null || this.sorter == sorter)
+            return null;
+
         if (this.sorter != null)
             sorter.clearChangeListener();
+
         this.sorter = sorter;
-        this.sorter.addChangeListener((event)-> Platform.runLater(this::paint) );
+        this.sorter.addChangeListener((event) -> Platform.runLater(this::paint));
         maxValue = 0;
+
         for (int intValue : this.sorter.getArray())
             maxValue = Math.max(maxValue, intValue);
+
         return sorter;
     }
 

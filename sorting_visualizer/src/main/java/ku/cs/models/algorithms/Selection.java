@@ -1,6 +1,6 @@
 package ku.cs.models.algorithms;
 
-import ku.cs.models.SelectedIndex;
+import ku.cs.models.FixedSelectedIndex;
 import ku.cs.models.SortingAlgorithm;
 
 public class Selection extends SortingAlgorithm {
@@ -11,7 +11,7 @@ public class Selection extends SortingAlgorithm {
             for (int j = i + 1; j < array.length; j++) {
                 if (array[j] < array[index])
                     index = j; // searching for lowest index
-                setSelectedIndices(SelectedIndex.as(index, j));
+                setSelectedIndices(FixedSelectedIndex.as(index, j));
                 beep(j);
                 onChange();
             }

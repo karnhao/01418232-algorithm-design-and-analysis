@@ -12,5 +12,5 @@ public interface Sorter {
     int getDelay();
     int[] getArray();
     void sort();
-    SelectedIndex[] getSelectedIndices();
+    List<SelectedIndex> getSelectedIndices();
 }

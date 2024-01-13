@@ -48,7 +48,9 @@ public class PrimaryController {
             new Merge(),
             new TopUpNonRecursiveMerge(),
             new Heap(),
+            new Quick(),
             new Radix(),
+            new Bogo(),
             new Check()
         );
 

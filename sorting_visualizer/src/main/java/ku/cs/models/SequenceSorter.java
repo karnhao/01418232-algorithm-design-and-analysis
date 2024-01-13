@@ -27,7 +27,7 @@ public class SequenceSorter extends DefaultSorter {
     }
 
     @Override
-    public SelectedIndex[] getSelectedIndices() {
+    public List<SelectedIndex> getSelectedIndices() {
         if (this.currentAlgorithm == null) return null;
         return this.currentAlgorithm.getSelectedIndices();
     }

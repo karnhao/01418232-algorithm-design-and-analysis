@@ -3,6 +3,9 @@ package ku.cs.models;
 import ku.cs.services.utils.Beep;
 import ku.cs.services.utils.SortingSound;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.event.ChangeEvent;
 
 public abstract class SortingAlgorithm extends DefaultSorter {
@@ -11,7 +14,7 @@ public abstract class SortingAlgorithm extends DefaultSorter {
 
     protected SortingSound sortingSound;
 
-    private SelectedIndex[] selectedIndices;
+    private List<SelectedIndex> selectedIndices;
 
     protected int minValue;
     protected int maxValue;
@@ -40,12 +43,16 @@ public abstract class SortingAlgorithm extends DefaultSorter {
     }
 
     @Override
-    final public SelectedIndex[] getSelectedIndices() {
+    final public List<SelectedIndex> getSelectedIndices() {
         return selectedIndices;
     }
 
-    final protected void setSelectedIndices(SelectedIndex[] selectedIndices) {
+    final protected void setSelectedIndices(List<SelectedIndex> selectedIndices) {
         this.selectedIndices = selectedIndices;
+    }
+
+    final protected void setSelectedIndices(SelectedIndex[] selectedIndices) {
+        setSelectedIndices(Arrays.asList(selectedIndices));
     }
 
     final protected void onChange() {
@@ -63,15 +70,20 @@ public abstract class SortingAlgorithm extends DefaultSorter {
             sort();
         } catch (Exception e) {
             System.out.println("Exception in sorting algorithm : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    final protected void beepValue(int value) {
-        Beep.tone(sortingSound.getHz(value), beep_mSec, volume);
+    final protected void beepValue(int... value) {
+        if (value == null) return;
+        Beep beep = Beep.getInstance();
+        beep.tone(sortingSound.getHz(value), beep_mSec, volume);
     }
 
-    final protected void beep(int index) {
-        this.beepValue(array[index]);
+    final protected void beep(int... index) {
+        if (index == null) return;
+        int[] values = Arrays.stream(index).map(i -> array[i]).toArray();
+        this.beepValue(values);
     }
 
     final protected void setBeep_mSec(int beep_mSec) {
