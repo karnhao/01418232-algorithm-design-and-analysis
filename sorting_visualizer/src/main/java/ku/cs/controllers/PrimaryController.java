@@ -50,8 +50,10 @@ public class PrimaryController {
             new Heap(),
             new Quick(),
             new Radix(),
+            new Slow(),
             new Bogo(),
-            new Check()
+            new Check(),
+            new Debug()
         );
 
         loader = new FXMLLoader();
@@ -82,7 +84,7 @@ public class PrimaryController {
         int delay = (int) delaySlider.getValue();
         if (delay < 1) throw new IllegalArgumentException("Delay must greater than 1");
         try {
-            visualizerController.runVisualize(size, delay, algorithmSequenceListController.getSortingAlgorithmList().toArray(SortingAlgorithm[]::new));
+            visualizerController.runVisualize(size, delay, algorithmSequenceListController.getSortingAlgorithmList());
         } catch (Exception e) {
             System.out.println("An error has occur : " + e.getMessage());
             throw new RuntimeException(e);

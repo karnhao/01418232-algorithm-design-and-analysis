@@ -51,7 +51,7 @@ public class VisualizerCanvas extends Canvas {
 
     private void colorBars(GraphicsContext graphicsContext, int[] values, double height, double colWidth, double x,
             SelectedIndexCollection selectedIndices) {
-        double margin = values.length > 128 ? 0 : 1;
+        double margin = values.length > 128 ? -1 : 1;
         for (int index = 0; index < values.length; index++) {
             graphicsContext.setFill(Color.valueOf("#FFFFFF"));
 
