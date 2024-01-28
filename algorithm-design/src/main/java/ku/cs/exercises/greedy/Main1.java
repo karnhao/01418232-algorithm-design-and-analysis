@@ -35,7 +35,7 @@ public class Main1 {
         int finish[] = {2, 6, 5, 8, 9, 9};
 
         function(start, finish).forEach((t)->{
-            System.out.print(t + " ");
+            System.out.println(start[t] + " " + finish[t]);
         });
         
     }
