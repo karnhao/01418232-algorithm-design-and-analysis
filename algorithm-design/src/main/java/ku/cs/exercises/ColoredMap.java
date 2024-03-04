@@ -59,23 +59,7 @@ public class ColoredMap {
     void printMap() {
         for (int i = 0; i < mapColors.length; i++) {
             System.out.print("map[" + i + "] is ");
-            switch (mapColors[i]) {
-                case NONE:
-                    System.out.println("none");
-                    break;
-                case RED:
-                    System.out.println("red");
-                    break;
-                case YELLOW:
-                    System.out.println("yellow");
-                    break;
-                case GREEN:
-                    System.out.println("green");
-                    break;
-                case BLUE:
-                    System.out.println("blue");
-                    break;
-            }
+            System.out.println(getColorString(mapColors[i]).toLowerCase());
         }
     }
 
